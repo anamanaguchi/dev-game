@@ -65,3 +65,7 @@ dist
 .idea/vcs.xml
 
 .idea/workspace.xml
+
+.idea/jsLibraryMappings.xml
+
+.idea/uiDesigner.xml
