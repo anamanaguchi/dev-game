@@ -1,28 +1,27 @@
 import DomManager from '../shared/dom-manager.service';
+import Shooter from '../shooter/shooter.component';
 
-export default class Game{
+export default class Game {
 
-    constructor(playground){
+    constructor(playground) {
         this.playground = playground;
         this._score = 0;
         this.domManager = new DomManager();
     }
 
-    get score(){
+    get score() {
         return this._score;
     }
 
-    set score(scoreValue){
+    set score(scoreValue) {
         this.playground.drawScore(scoreValue);
         this._score = scoreValue;
     }
 
-    startGame(){
-        let button = document.createElement('button');
-        button.innerHTML = 'SCORE UP!';
-
-        this.domManager.appendToDom(this.playground.area);
-        this.domManager.attachEvent(button,"click", ()=>this.score += 10);
-        this.domManager.appendToElement(this.playground.area,button);
+    startGame() {
+        let shooter = new Shooter();
+        this.playground.area
+            .appendElement(shooter.shooterNode)
+            .appendToDom(this.playground.area);
     }
 }

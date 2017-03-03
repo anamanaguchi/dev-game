@@ -1,20 +1,38 @@
-export default class DomManager{
-    constructor(){};
+export default class DomManager {
+    constructor() {
+    };
 
-    createElement(element){
-        return document.createElement(element);
+    createElement(element) {
+        let newElement = document.createElement(element);
+        let thisProto = {
+            appendText: this.appendText,
+            appendToDom: this.appendToDom,
+            attachEvent: this.attachEvent,
+            appendElement: this.appendElement
+        };
+
+        newElement.__proto__ = Object.assign(newElement.__proto__, thisProto);
+        return newElement;
     }
 
-    appendToDom(element){
+    appendToDom(element) {
         document.body.appendChild(element);
+        return this;
     }
 
-    appendToElement(parent,child){
-        parent.appendChild(child);
+    appendText(text) {
+        this.innerHTML = text;
+        return this;
     }
 
-    attachEvent(element,eventType,event){
-        element.addEventListener(eventType,event);
+    appendElement(child) {
+        this.appendChild(child);
+        return this;
+    }
+
+    attachEvent(eventType, event) {
+        this.addEventListener(eventType, event);
+        return this;
     }
 
 }

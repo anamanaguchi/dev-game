@@ -1,7 +1,10 @@
+import DomManager from '../shared/dom-manager.service';
+
 export default class Playground {
     constructor() {
-        this.container = document.createElement('div');
-        this.scoreWrapper = document.createElement('span');
+        this.domManager = new DomManager();
+        this.container = this.domManager.createElement('div');
+        this.scoreWrapper = this.domManager.createElement('span');
 
     }
 
