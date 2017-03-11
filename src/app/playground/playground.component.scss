@@ -3,23 +3,22 @@
   width: 100vw;
   height: 100vh;
   box-sizing: border-box;
-  background-color: $mainColor;
   left:0;
   top: 0;
   border: 20px solid black;
-
+  overflow: hidden;
+  .bg{
+    position: relative;
+    width: auto;
+    transition: all 0.1s ease 0s;
+    -webkit-transform: scale(1) translate3d(0px,0px,0px);
+    -moz-transform: scale(1) translate3d(0px,0px,0px);;
+    transform: scale(1) translate3d(0px,0px,0px);;
+  }
   .score{
     position: absolute;
     top: 10px;
     left: 10px;
   }
 
-  button{
-    position: absolute;
-    bottom: 10px;
-    width: 100px;
-    left: 50%;
-    height: 50px;
-    margin-left: -50px;
-  }
 }

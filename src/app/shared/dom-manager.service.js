@@ -1,6 +1,7 @@
 export default class DomManager {
+
     constructor() {
-    };
+    }
 
     createElement(element) {
         let newElement = document.createElement(element);
@@ -8,7 +9,10 @@ export default class DomManager {
             appendText: this.appendText,
             appendToDom: this.appendToDom,
             attachEvent: this.attachEvent,
-            appendElement: this.appendElement
+            appendElement: this.appendElement,
+            addClass: this.addClass,
+            removeClass: this.removeClass,
+            addAttribute: this.addAttribute
         };
 
         newElement.__proto__ = Object.assign(newElement.__proto__, thisProto);
@@ -31,8 +35,24 @@ export default class DomManager {
     }
 
     attachEvent(eventType, event) {
-        this.addEventListener(eventType, event);
+        this.addEventListener(eventType, event, false);
         return this;
     }
+
+    addClass(className) {
+        this.classList.add(className);
+        return this;
+    }
+
+    removeClass(className) {
+        this.classList.remove(className);
+        return this;
+    }
+
+    addAttribute(attr, value) {
+        this.setAttribute(attr, value);
+        return this;
+    }
+
 
 }

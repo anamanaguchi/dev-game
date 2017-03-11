@@ -1,6 +1,7 @@
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/app/app.js',
@@ -15,7 +16,11 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname + '/src', 'index.html')
-        })
+        }),
+        new CopyWebpackPlugin([
+            // {output}/file.txt
+            {from: 'src/assets', to:'assets'},
+        ])
     ],
 
     module: {

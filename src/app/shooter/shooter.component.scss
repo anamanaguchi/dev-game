@@ -1,0 +1,17 @@
+.shooter{
+  background-image: url('~/assets/gun.png');
+  background-color: transparent;
+  width: 183px;
+  height: 161px;
+  display: block;
+  background-position: 367px 0;
+  border: 0;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -76px;
+  z-index: 999;
+  &.active{
+    background-position: 183px 0;
+  }
+}

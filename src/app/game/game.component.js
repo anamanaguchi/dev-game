@@ -22,6 +22,7 @@ export default class Game {
         let shooter = new Shooter();
         this.playground.area
             .appendElement(shooter.shooterNode)
-            .appendToDom(this.playground.area);
+            .appendToDom(this.playground.area)
+            .attachEvent('click', () => shooter.shoot());
     }
 }
