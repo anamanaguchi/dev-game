@@ -12,7 +12,8 @@ export default class DomManager {
             appendElement: this.appendElement,
             addClass: this.addClass,
             removeClass: this.removeClass,
-            addAttribute: this.addAttribute
+            addAttribute: this.addAttribute,
+            css: this.css
         };
 
         newElement.__proto__ = Object.assign(newElement.__proto__, thisProto);
@@ -35,7 +36,7 @@ export default class DomManager {
     }
 
     attachEvent(eventType, event) {
-        this.addEventListener(eventType, event, false);
+        this.addEventListener(eventType, event, true);
         return this;
     }
 
@@ -51,6 +52,11 @@ export default class DomManager {
 
     addAttribute(attr, value) {
         this.setAttribute(attr, value);
+        return this;
+    }
+
+    css(property, value) {
+        this.style[property] = value;
         return this;
     }
 

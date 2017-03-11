@@ -31,10 +31,8 @@ export default class Playground {
         if (window.event) {
             event = window.event;
         }
-        var mousex = event.clientX;
-        var mousey = event.clientY;
         this.containerBg.style.webkitTransform =
-            'scale(1) translate3d(' + -mousex /2 + 'px,' + -mousey / .8 + 'px,' + 0 + 'px)';
+            'translate3d(' + -event.clientX /2 + 'px,' + -event.clientY / .8 + 'px,' + 0 + 'px)';
 
 
     }
