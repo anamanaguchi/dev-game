@@ -10,6 +10,7 @@ export default class DomManager {
             appendToDom: this.appendToDom,
             attachEvent: this.attachEvent,
             appendElement: this.appendElement,
+            appendElements: this.appendElements,
             addClass: this.addClass,
             removeClass: this.removeClass,
             addAttribute: this.addAttribute,
@@ -32,6 +33,11 @@ export default class DomManager {
 
     appendElement(child) {
         this.appendChild(child);
+        return this;
+    }
+
+    appendElements(childArr){
+        childArr.map((child)=>this.appendElement(child));
         return this;
     }
 

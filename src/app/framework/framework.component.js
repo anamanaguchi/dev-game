@@ -3,6 +3,11 @@ import DomManager from '../shared/dom-manager.service';
 export default class Framework {
     constructor() {
         this.domManager = new DomManager();
+        this.activeFrameworkIndex = 0;
+        this._frameworks = [];
+        for(let i=0; i<100; i++){
+            this._frameworks.push(this.domManager.createElement('span').addClass('framework'));
+        }
     }
 
    randomBetween(min, max) {
@@ -13,16 +18,20 @@ export default class Framework {
         }
     }
 
-    createFramework() {
+    get frameworks(){
+        return this._frameworks;
+    }
+
+    showFramework() {
+        let activeElement = this.activeFrameworkIndex;
         let leftPosition = this.randomBetween(50, window.innerWidth - 200) + 'px';
         let bottomPosition = this.randomBetween(170, window.innerHeight - 320) + 'px';
-        let framework = this.domManager
-            .createElement('span')
-            .addClass('framework')
+        this._frameworks[activeElement ]
+            .css('display', 'block')
             .css('left', leftPosition)
             .css('bottom', bottomPosition);
-
-        return framework;
+        this.activeFrameworkIndex++;
+        return this._frameworks[this.activeFrameworkIndex];
     }
 
 }

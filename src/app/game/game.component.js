@@ -22,16 +22,16 @@ export default class Game {
 
     startGame() {
         let shooter = new Shooter();
+        let framework = new Framework();
         this.playground.area
             .appendElement(shooter.shooterNode)
             .appendToDom(this.playground.area)
             .attachEvent('click', () => {
                 this.score = shooter.shoot(event) ? ++this.score : this.score;
-
-            });
-        setInterval(_=> {
-            let framework = new Framework();
-            this.playground.area.appendElement(framework.createFramework());
-        },1100);
+            })
+            .appendElements(framework.frameworks);
+        //setInterval(_=> {
+        //    framework.showFramework();
+        //},1100);
     }
 }
