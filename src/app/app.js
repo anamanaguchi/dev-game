@@ -3,7 +3,7 @@ import Game from './game/game.component.js';
 
 require('../scss/main.scss');
 
-let playground = new Playground();
-let game = new Game(playground);
-
-game.startGame();
+const game = customElements.get('game-tag')
+console.log(new game());
+// document.body.appendChild(new game())
+// game.initGame();

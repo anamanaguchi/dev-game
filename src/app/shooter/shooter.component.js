@@ -1,17 +1,20 @@
 import DomManager from '../shared/dom-manager.service';
+import CustomHtmlElement from "../shared/customHtmlElement";
 
-export default class Shooter {
+class Shooter extends CustomHtmlElement {
     constructor() {
-        this.domManager = new DomManager();
-        this.shooterNode = this.domManager
-            .createElement('div')
-            .attachEvent('click', () => this.shoot())
+        super();
+
+    }
+
+    createdCallback() {
+        this.attachEvent('click', () => this.shoot())
             .addClass('shooter');
     }
 
     animateShooter() {
-        this.shooterNode.addClass('active');
-        setTimeout(()=>this.shooterNode.removeClass('active'), 200);
+        this.addClass('active');
+        setTimeout(() => this.removeClass('active'), 200);
     }
 
     shoot(event, score) {
@@ -19,12 +22,12 @@ export default class Shooter {
         this.animateShooter();
         if (event.target.classList.contains('enemy')) {
             event.target.classList.add('remove-action');
-            setTimeout(()=>event.target.css('display','none'));
+            setTimeout(() => event.target.css('display', 'none'), 100);
             goodShot = true;
         }
 
         return goodShot;
     }
-
-
 }
+
+export default document.registerElement('shooter-tag', Shooter);

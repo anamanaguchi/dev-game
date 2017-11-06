@@ -1,48 +1,49 @@
-
 import DomManager from '../shared/dom-manager.service';
 import Shooter from '../shooter/shooter.component';
 import Enemy from '../enemy/enemy.component';
-export default class Game {
+import Playground from '../playground/playground.component';
+import Score from '../score/score.component';
+import CustomHtmlElement from "../shared/customHtmlElement";
 
-    constructor(playground) {
-        this.playground = playground;
+class Game extends CustomHtmlElement {
+
+    constructor() {
+        super();
+        this.addClass('game');
+        this.playground = new Playground();
+        this.score = new Score();
+        this.shooter = new Shooter();
         this.activeEnemy = 0;
-        this._score = 0;
-        this.domManager = new DomManager();
         this.enemies = [];
     }
 
-    get score() {
-        return this._score;
+    startGame() {
+        setInterval(() => {
+            this.enemies[this.activeEnemy].show();
+            setTimeout(() => {
+                this.enemies[this.activeEnemy].remove()
+                this.activeEnemy++;
+            }, 2000)
+        }, 4000)
     }
 
-    set score(scoreValue) {
-        this.playground.drawScore(scoreValue);
-        this._score = scoreValue;
-        console.log('SCORE: ' + this._score);
-    }
-
-    createEnemies(number){
-        for(let i=0; i<number; i++){
+    createEnemies(number) {
+        for (let i = 0; i < number; i++) {
             this.enemies.push(new Enemy());
         }
     }
 
-    startGame() {
-        let shooter = new Shooter();
+    initGame() {
         this.createEnemies(20);
-        this.playground.area
-            .appendElement(shooter.shooterNode)
-            .appendToDom(this.playground.area)
+        this.playground.appendElements(this.enemies);
+        this.appendElement(this.playground)
+            .appendElement(this.shooter)
+            .appendElement(this.score)
             .attachEvent('click', () => {
-                this.score = shooter.shoot(event) ? ++this.score : this.score;
-            }).appendElements(this.enemies);
-        setInterval(()=>{
-            this.enemies[this.activeEnemy].show();
-            setTimeout(()=>{
-                this.enemies[this.activeEnemy].remove()
-                this.activeEnemy++;
-            },2000)
-        },4000)
+                this.shooter.shoot(event) && this.score.addScore();
+            })
+
     }
 }
+
+customElements.define('game-tag', Game);
