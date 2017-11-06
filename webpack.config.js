@@ -1,57 +1,42 @@
-var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+    context: __dirname,
     entry: './src/app/app.js',
     output: {
         path: path.join(__dirname, "dist"),
-        filename: 'bundle.js'
+        filename: 'js/bundle.js'
     },
-    plugins: [
-        new ExtractTextPlugin({
-            filename: 'main.css',
-            allChunks: true
-        }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname + '/src', 'index.html')
-        }),
-        new CopyWebpackPlugin([
-            // {output}/file.txt
-            {from: 'src/assets', to:'assets'},
-        ])
-    ],
-
     module: {
         rules: [
             // transform ES6 to ES5
-            {test: /\.html$/, use: 'raw-loader'},
             {
                 test: /\.js$/,
                 exclude: /(node_modules)/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015']
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
                 }
             },
             {
                 test: /\.scss$/,
-                loader: ExtractTextPlugin.extract({fallbackLoader: "style-loader", loader: "css-loader!sass-loader"})
+                use: ExtractTextPlugin.extract({ fallback: "style-loader", use: ["css-loader", "sass-loader"] })
             }
-
-            // style-loader: add css files into DOM
-            // css-loader: add css files into the JS files
-            // {
-            //     test: /\.css$/,
-            //     loader: 'style-loader!css-loader'
-            // },
-
-            // LESS
-            // {
-            //     test: /\.less$/,
-            //     loader: 'style-loader!css-loader!less-loader'
-            // }
         ]
-    }
+    },
+    plugins: [
+        new ExtractTextPlugin('scss/main.css'),
+        new CopyWebpackPlugin([
+            // {output}/file.txt
+            {from: 'src/assets', to:'assets'},
+        ]),
+        new HtmlWebpackPlugin({
+            template: "./src/index.html"
+        }),
+    ]
 }

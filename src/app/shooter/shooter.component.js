@@ -17,9 +17,9 @@ export default class Shooter {
     shoot(event, score) {
         let goodShot = false;
         this.animateShooter();
-        if (event.target.classList.contains('framework')) {
+        if (event.target.classList.contains('enemy')) {
             event.target.classList.add('remove-action');
-            setTimeout(()=>event.target.parentNode.removeChild(event.target), 500);
+            setTimeout(()=>event.target.css('display','none'));
             goodShot = true;
         }
 
