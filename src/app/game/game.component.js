@@ -1,4 +1,3 @@
-import DomManager from '../shared/dom-manager.service';
 import Shooter from '../shooter/shooter.component';
 import Enemy from '../enemy/enemy.component';
 import Playground from '../playground/playground.component';

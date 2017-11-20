@@ -1,4 +1,3 @@
-import DomManager from '../shared/dom-manager.service';
 import CustomHtmlElement from "../shared/customHtmlElement";
 
 class Shooter extends CustomHtmlElement {
