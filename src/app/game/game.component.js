@@ -39,11 +39,13 @@ class Game extends CustomHtmlElement {
         this.appendElement(this.playground)
             .appendElement(this.shooter)
             .appendElement(this.score)
-            .attachEvent('click', () => {
+            .attachEvent('click', (event) => {
                 this.shooter.shoot(event) && this.score.addScore();
             })
-
+        this.startGame();
     }
 }
 
 customElements.define('game-tag', Game);
+
+export default customElements.get('game-tag');

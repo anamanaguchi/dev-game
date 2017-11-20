@@ -3,12 +3,10 @@ import CustomHtmlElement from '../shared/customHtmlElement';
 class Enemy extends CustomHtmlElement{
     constructor() {
         super();
-    }
-
-    createdCallback(){
         this.addClass('enemy');
         this.css('display', 'none');
     }
+
 
    randomBetween(min, max) {
         if (min < 0) {
@@ -27,5 +25,6 @@ class Enemy extends CustomHtmlElement{
     }
 
 }
+customElements.define('enemy-tag', Enemy);
 
-export default document.registerElement('enemy-tag', Enemy);
+export default customElements.get('enemy-tag');

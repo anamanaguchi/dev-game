@@ -4,9 +4,6 @@ class Playground extends CustomHtmlElement {
 
     constructor() {
         super();
-    }
-
-    createdCallback(){
         this.mouseMoveProperties = {
             lFollowX: 0,
             lFollowY: 0,
@@ -15,12 +12,10 @@ class Playground extends CustomHtmlElement {
             friction: 0.2
         };
         this.addClass('playground');
-        this.attachEvent('mousemove', () => this.moveBackground());
+        this.attachEvent('mousemove', (event) => this.moveBackground(event));
     }
 
-
-    moveBackground() {
-        const event = window.event;
+    moveBackground(event) {
         const lMouseX = Math.max(-100, Math.min(100, window.innerWidth / 2 - event.clientX));
         const lMouseY = Math.max(-100, Math.min(100, window.innerHeight / 2 - event.clientY));
         this.mouseMoveProperties.lFollowX = (20 * lMouseX) / 100;
@@ -37,4 +32,6 @@ class Playground extends CustomHtmlElement {
 
 }
 
-export default document.registerElement('play-ground', Playground);
+customElements.define('play-ground', Playground);
+
+export default customElements.get('play-ground');

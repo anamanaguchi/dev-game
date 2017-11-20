@@ -4,11 +4,7 @@ import CustomHtmlElement from "../shared/customHtmlElement";
 class Shooter extends CustomHtmlElement {
     constructor() {
         super();
-
-    }
-
-    createdCallback() {
-        this.attachEvent('click', () => this.shoot())
+        this.attachEvent('click', (event) => this.shoot(event))
             .addClass('shooter');
     }
 
@@ -17,7 +13,7 @@ class Shooter extends CustomHtmlElement {
         setTimeout(() => this.removeClass('active'), 200);
     }
 
-    shoot(event, score) {
+    shoot(event) {
         let goodShot = false;
         this.animateShooter();
         if (event.target.classList.contains('enemy')) {
@@ -29,5 +25,5 @@ class Shooter extends CustomHtmlElement {
         return goodShot;
     }
 }
-
-export default document.registerElement('shooter-tag', Shooter);
+customElements.define('shooter-tag', Shooter);
+export default customElements.get('shooter-tag');
