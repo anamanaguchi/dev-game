@@ -23,6 +23,10 @@ class Score extends CustomHtmlElement {
         this.scoreValue = ++this._scoreValue
     }
 
+    resetScore(){
+        this.scoreValue = 0;
+    }
+
 }
 
 customElements.define('score-tag', Score);

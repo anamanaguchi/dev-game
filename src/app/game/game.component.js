@@ -10,20 +10,30 @@ class Game extends CustomHtmlElement {
         super();
         this.addClass('game');
         this.playground = new Playground();
+        this.round = 0;
         this.score = new Score();
         this.shooter = new Shooter();
         this.activeEnemy = 0;
         this.enemies = [];
+        this.success = false;
+        this.lostShots = 0;
     }
 
-    startGame() {
-        setInterval(() => {
+
+    setGameInterval() {
+        return setInterval(() => {
+            if (!this.enemies[this.activeEnemy]) {
+                this.nextRound();
+            }
             this.enemies[this.activeEnemy].show();
             setTimeout(() => {
-                this.enemies[this.activeEnemy].remove()
+                !this.success && this.lostShots++;
+                this.enemies[this.activeEnemy].remove();
+                this.lostShots > 3 && this.gameOver();
                 this.activeEnemy++;
-            }, 2000)
-        }, 4000)
+                this.success = false;
+            }, 1000 - this.round * 100);
+        }, 2000 - this.round * 2 * 100)
     }
 
     createEnemies(number) {
@@ -32,16 +42,43 @@ class Game extends CustomHtmlElement {
         }
     }
 
-    initGame() {
-        this.createEnemies(20);
+    nextRound() {
+        this.round++;
+        clearInterval(this.gameInterval);
+        this.enemies = [];
+        this.activeEnemy = 0;
+        this.createEnemies(5);
         this.playground.appendElements(this.enemies);
+        this.gameInterval = this.setGameInterval(this.round);
+    }
+
+
+    gameOver(){
+        const gameOverDialog = confirm('Game over! Your score: '+ this.score.scoreValue +' Wanna play again?');
+        if(gameOverDialog){
+            this.round = 0;
+            this.lostShots = 0;
+            this.score.resetScore();
+            this.nextRound();
+        }else{
+            window.location = 'http://google.com';
+        }
+    }
+
+    initGame() {
+        this.nextRound();
         this.appendElement(this.playground)
             .appendElement(this.shooter)
             .appendElement(this.score)
             .attachEvent('click', (event) => {
-                this.shooter.shoot(event) && this.score.addScore();
+                if(this.shooter.shoot(event)){
+                    this.success = true;
+                    this.score.addScore();
+                }else{
+                    this.success = false;
+                }
             })
-        this.startGame();
+
     }
 }
 
